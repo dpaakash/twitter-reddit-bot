@@ -15,8 +15,9 @@ reddit_client_secret = environ['reddit_client_secret']
 # subreddit to fetch posts from
 subreddit_name = 'algorithms'
 
+
 def get_reddit_posts():
-    print ('Fetching posts from reddit...')
+    print('Fetching posts from reddit...')
     try:
         r = praw.Reddit(
             user_agent='algorithms subreddit bot',
@@ -24,22 +25,32 @@ def get_reddit_posts():
             client_secret=reddit_client_secret
         )
         posts = r.subreddit(subreddit_name).hot(limit=5)
-    except Error:
-        print('Error while fetching posts from reddit')
+    except Exception as error:
+        print('Error while fetching posts from reddit: {}'.format(error))
     return posts
 
-def generate_tweet():
-    posts = get_reddit_posts()
-    auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
-    auth.set_access_token(twitter_access_token, twitter_access_token_secret)
-    api = tweepy.API(auth)
-    for post in posts:
-        print(post.title + post.url)
-        api.update_status(status=post.title + '\n' + post.url)
-        time.sleep(30)
+
+def post_tweet():
+    try:
+        posts = get_reddit_posts()
+        auth = tweepy.OAuthHandler(
+            twitter_consumer_key, twitter_consumer_secret)
+        auth.set_access_token(twitter_access_token,
+                              twitter_access_token_secret)
+        api = tweepy.API(auth)
+        for post in posts:
+            print(post.title + post.url)
+            api.update_status(status=post.title + '\n' + post.url)
+            time.sleep(5)
+    except Exception as error:
+        print('Error while posting tweet: {}'.format(error))
+
 
 def main():
-    generate_tweet()
+    while True:
+        post_tweet()
+        time.sleep(5*60)
+
 
 if __name__ == '__main__':
     main()
