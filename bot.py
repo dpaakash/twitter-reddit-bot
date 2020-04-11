@@ -49,7 +49,7 @@ def post_tweet():
 def main():
     while True:
         post_tweet()
-        time.sleep(5*60)
+        time.sleep(12*60*60)
 
 
 if __name__ == '__main__':
