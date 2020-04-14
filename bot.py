@@ -58,14 +58,12 @@ def post_tweet():
         posts = get_reddit_posts()
 
         # setup connection with twitter
-        auth = tweepy.OAuthHandler(
-            twitter_consumer_key, twitter_consumer_secret)
-        auth.set_access_token(twitter_access_token,
-                              twitter_access_token_secret)
+        auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
+        auth.set_access_token(twitter_access_token, twitter_access_token_secret)
         api = tweepy.API(auth)
 
-        for post in posts:
-
+        # keep timeline posts in the same order as reddit
+        for post in reversed(list(posts)):
             # avoid duplicate tweets
             if isPostTweeted(post):
                 continue
