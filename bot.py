@@ -53,10 +53,11 @@ def post_tweet():
         # IDs of the posts tweeted now
         curr_tweeted_posts_id = []
 
-        # keep timeline posts in the same order as reddit
+        # reverse posts to keep timeline posts in the same order as reddit
         for post in reversed(list(posts)):
             # avoid duplicate tweets
             if post.id in last_tweeted_posts_id:
+                curr_tweeted_posts_id.append(post.id)
                 continue
 
             print(post.title + post.url)
