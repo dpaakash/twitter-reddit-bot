@@ -61,13 +61,13 @@ def post_tweet():
                 continue
 
             print(post.title + post.url)
-            api.update_status(status=post.title + '\n' + post.url)
+            # api.update_status(status=post.title + '\n' + post.url)
             curr_tweeted_posts_id.append(post.id)
-
-        # assign currently tweeted post IDs list to the last tweeted list
-        last_tweeted_posts_id = curr_tweeted_posts_id
     except Exception as error:
         print('Error while posting tweet: {}'.format(error))
+    finally:
+        # assign currently tweeted post IDs list to the last tweeted list
+        last_tweeted_posts_id = curr_tweeted_posts_id
 
 
 def main():
