@@ -61,8 +61,17 @@ def post_tweet():
                 continue
 
             print(post.title + post.url)
-            api.update_status(status=post.title + '\n' + post.url)
-            curr_tweeted_posts_id.append(post.id)
+            try:
+                # post tweet
+                api.update_status(status=post.title + '\n' + post.url)
+                curr_tweeted_posts_id.append(post.id)
+            except tweepy.TweepError as tweep_error:
+                print('Error while posting tweet: {}'.format(tweep_error))
+
+                # update current tweeted list if it's a duplicate status error
+                if tweep_error.api_code == 187:
+                    curr_tweeted_posts_id.append(post.id)
+                    continue           
     except Exception as error:
         print('Error while posting tweet: {}'.format(error))
     finally:
