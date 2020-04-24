@@ -52,6 +52,8 @@ def post_tweet():
 
         # IDs of the posts tweeted now
         curr_tweeted_posts_id = []
+        print('Last tweeted IDs at the start of for loop: ')
+        print(last_tweeted_posts_id)
 
         # reverse posts to keep timeline posts in the same order as reddit
         for post in reversed(list(posts)):
@@ -77,6 +79,8 @@ def post_tweet():
     finally:
         # assign currently tweeted post IDs list to the last tweeted list
         last_tweeted_posts_id = curr_tweeted_posts_id
+        print('Last tweeted IDs in the finally block: ')
+        print(last_tweeted_posts_id)
 
 
 def main():
