@@ -17,7 +17,7 @@ reddit_client_secret = environ['reddit_client_secret']
 subreddit_name = 'algorithms'
 
 # interval(in seconds) between tweeting the reddit posts
-interval = 12*60*60
+interval = 24*60*60
 
 # get posts from the subreddit
 def get_reddit_posts():
@@ -63,6 +63,7 @@ def post_tweet():
                 continue
             
             print('Tweeting: ' + post.title)
+            
             # post tweet
             api.update_status(status=post.title + '\n' + post.url)
     except Exception as error:
